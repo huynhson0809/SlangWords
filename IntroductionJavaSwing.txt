@@ -1,0 +1,121 @@
+## Layout trong Java Swing
+Được sử dụng để chỉ định bố cục các thành con bên trong một container. Container cũng là một thành phần giao diện của Java Swing, tuy nhiên nó có thể chứa các thành phần nhỏ hơn như Button, Label, Input, etc. Java swing cung cấp một số layout, đối với mỗi loại layout được sử dụng thì các thành con bên trong chúng có thể được trình bày khác nhau.
+Dưới đây là danh sách các Layout trong Java Swing:
+- FlowLayout: các thành phần con theo hướng t trái sang phải hoặc ngược lại trên cùng 1 dòng, nếu có quá nhiều thành phần con thì xuống dòng tạo hàng mới
+    - FlowLayout() – Tạo mới một FlowLayout object với các giá trị mặc định như canh giữa các thành phần con, khoảng cách ngang và dọc giữa các thành phần con là 5.
+    - FlowLayout(int align) – Tương tự như trên, tuy viên việc canh các phần tử ở giữa theo mặc định sẽ được ghi đè bởi giá trị align được truyền vào. (Left: 0, center: 1, right: 2)
+    - FlowLayout(int align, int hgap, int vgap) – Đây là constructor với đầy đủ các tham số chỉ định việc canh các phần tử, khoảng cách chiều ngang với hgap và chiều dọc vgap
+- BorderLayout:
+    - BorderLayout tổ chức các thành phần con thành 5 vùng NORTH, SOUTH, EAST, WEST and CENTER.
+    - Ở mỗi vùng chỉ có thể chứa tối đa một thành phần con, khi thêm các phần tử khác nhau vào BorderLayout bạn cần chỉ định 1 trong 5 vùng trên.
+    - Nếu như k có 4 vùng: north, south, west, east thì cùng center sẽ tràn đầy cửa sổ, thông thường khi đưa các
+    control JTable, JTree, ListView, JScrollpane, ... ta thường đưa vào vùng center để nó có thể tự co dãn
+- CardLayout
+- BoxLayout:
+BoxLayout được sử dụng để sắp xếp các thành phần con theo chiều dọc hoặc theo chiều ngang. Trong BoxLayout cung cấp các hằng số X_AXIS, Y_AXIS trong đó X_AXIS dùng để sắp xếp các thành phần con theo chiều ngang từ trái sang phải, còn Y_AXIS thì theo chiều dọc từ trên xuống dưới.
+- GridLayout: được sử dụng để chia các thành phần con ra thành các hình chữ nhật theo các dòng và theo các cột
+    - Ví dụ: panel.setLayout(new GridLayout(2,3)); => tạo ra 1 layout có 2 dòng và 3 cột
+- GridBagLayout
+- GroupLayout
+- SpringLayout
+## Jframe
+- Là một Container
+- Cung cấp k gian cho các component bên trong hoạt dộngd
+- Giống như 1 cửa sổ window có tiêu đề và viền
+
+Các hàm phổ biến trong JFrame:
+- setSize(width, heigh): set kích thuớc
+- setVisible(true/fasle): set có hiện ra khi chạy chương trình k
+- setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE): set chương trình có dừng khi exit JFrame k và ngược lại
+- setLayout(1 cái layout gì đó): set layout (bố cục các thành phần bên trong theo ý nào đó của chúng ta)
+- add(add cái gì đó vào JFrame): để add các components khác vào trong JFrame làm việc của chúng ta
+- setLocationRelativeTo(null): thì khi chạy để hiển thị nó sẽ ở giữa màn hình
+- pack(): tạo ra 1 JFrame có kích thước vừa đủ với các thành phần trong nó
+## JButton: làm các button
+- Muốn set color text: button.setForeground(Color.RED)
+- Muốn set Font:
+    Font font = new Font("Arial", Font.BOLD/Font.ITALIC, 25);
+    button.setFont(font)
+## JLable: để hiển thị text hoặc image hoặc cả 2 (chú ý ta có phương thức setLableFor(1 cái thành phần cần lable)
+## JFormattedTextField: cho phép chúng ta tạo ra các định dạng văn bản mà người dùng khi nhập dữ liệu dạng văn bản phải tuân theo, ví dụ như định dạng số điện thoại, email, ngày tháng, etc
+Chúng ta có một bảng danh sách các quy ước sau có thể sử dụng trong MaskFormatter:
+#	Bất kỳ chữ số nào (Character.isDigit).
+‘	Ký tự thoát, được sử dụng để thoát bất kỳ ký tự định dạng đặc biệt nào.
+U	Tất cả các ký tự in hoa sẽ được chuyển thành ký tự thường
+L	Tất cả các ký tự thường sẽ được chuyển thành ký tự in hoa
+A	Bất kỳ ký tự hoặc chữ số nào đều được (Character.isLetter or Character.isDigit).
+?	Bất kỳ ký tự nào (Character.isLetter).
+*	Bất cứ thứ gì.
+H	Ký tự mã Hex (0-9, a-f or A-F).
+## JScrollPane: đc sử dụng khi muốn thêm các thanh cuoonj vào trong 1 thành phần nào đó (thường l textArea hay Combo box)
+    - Cú pháp: JScrollPane s = new JScrollPane(component, JScrollPane.Vertical, JScrollPane.Horizental)
+    - Các tham số thứ 2 và 3 được dùng để cấu hình có hiển thị thanh cuộn ngang và dọc k
+## JMenuBar: được dùng để tạo ra 1 cái thanh MenuBar ở trên
+    - Trong cái JMenuBar thì có nhiều cái JMenu - kiểu như cái Menu con
+    - Trong cái JMenu thì có nhiều JMenuItem - là các thành phần mà khi click vào JMenu nó sẽ hiển thij xuống
+    - Nhớ dùng this.setJMenuBar(jMenubar) - trong đó cái jMenubar là cái đã khởi tạo lúc nãy
+## JToolBar: để tạo 1 thanh công cụ trong java:
+    - Cú pháp: JToolBar j = new  JToolBar();
+    - Sau đó tạo các button rồi add các button đó vô
+    - Rồi add vào panel -> add frame như bth
+## JPopupMenu: dùng để xử lý click chuột phải
+    - Cũng tạo ra 1 component JPopupMenu rồi tạo ra các JMenu hoặc JMenuItem rồi add vô
+    - Xử lý sự kiện MouseEventListener để bắt click chuột phải trong component đó
+## JCheckboxMenuItem: tương tự như JMenuItem nhưng nó có thể check được
+## JRadioButton: được dùng khi muốn lựa chọn 1 trong nhiều cái
+    - Phải dùng 1 cái ButtonGroup để nhóm các JRadioButton lại thì mới chọn được 1 trong nhiều cái JButtonGroup
+    - Sau khi add các JRadioButton vào trong ButtonGroup thì cũng phải add nó vào trong cái JPanel mới hiển trị lên view dc
+    - 1 ví dụ để lấy ra các lựa chọn trong JRadioButton qua lớp controller:
+        String monChinh = "";
+		Enumeration<AbstractButton> buttons_monChinh =  thucDonView.buttonGroup_MonChinh.getElements();
+		while(buttons_monChinh.hasMoreElements()) {
+			AbstractButton b = buttons_monChinh.nextElement();
+			if(b.isSelected()) {
+				monChinh = b.getText();
+			}
+		}
+## JCheckbox: đc dùng khi muốn chọn nhiều cái
+    - Phải dùng 1 cái ButtonGroup nhóm lại để tí còn xử lý biêết mình chọn những cái nào
+    - Sau khi add các JCheckbox vào trong ButtonGroup thì cũng phải add nó vào trong cái JPanel mới hiển trị lên view dc
+    - 1 Ví dụ để lấy ra các lựa chọn trong JRadioCheckbox:
+        String monPhu = "";
+		for (AbstractButton b : thucDonView.list_buttonGroup_MonPhu) {
+			if(b.isSelected()) {
+				monPhu = monPhu+b.getText()+"; ";
+			}
+		}
+
+## JList: được dùng khi ta muốn chọn nhiều lựa chọn cungf 1 lúc, tương tự như chọn nhiều checkbox
+    - Cú pháp: JList<String> l = new JList<String>(mảng truyền vào);
+    - Để lấy ra các giá trị trong JList thì dùng như thế này:
+        String monPhu = "";
+		Object[] luaChonMonPhus = thucDonView.jList_MonPhu.getSelectedValues();
+		for (Object o : luaChonMonPhus) {
+			monPhu = monPhu + o.toString() + "; ";
+		}
+
+## ActionListener: ok
+## MouseListener: làm tương tự như ActionListener
+## Các lưu ý:
+- Nếu muốn set giá trị cho cái nào thì dùng setPreferredSize(new Demension(width, heigh));
+    Ví dụ:         JPanel pnWest = new JPanel();
+                   pnWest.setBackground(Color.BLUE);
+                   pnBorderLayout.add(pnWest, BorderLayout.WEST);
+                   pnWest.setPreferredSize(new Dimension(50,0));
+- Từ này về sau trong các chương trình Java Swing thì phải viết theo mô hình MVC (Model - Controller - View)
+    - Model: nơi chứa các dữ liệu khởi tạo, các hàm getter, setter tương ứng.
+    - View: hiển thị màn hình ra cho người dùng (JFrame, JButton, ...)
+    - Controller: nơi để lắng nghe các sự kiện chẳng hạn
+- Nếu muốn set Font cho 1 cái component nào đó thì dùng Font
+    - Ví dụ: Font font = new Font("Arial", Font.BOLD|Font.ITALIC, 25);
+             button.setFont(font)
+- Nếu muốn vẽ và hiển thij hình ảnh cơ bản thì tạo 1 cái class rồi implement JPanel để vẽ, hoawjc khỏi tạo cũng dc,
+override lại cái thằng protected void paintComponent(Graphics g) rồi dùng các hàm như g.drawLine, g.drawOval để vẽ,....
+- Cách để thay logo của cái frame:
+    - Tạo: URL url = MainView.class.getResource("ten file");
+    - Tạo: Image img = Toolkit.getDefaultToolkit().createImage(url);
+    - this.setIconImage(img);
+- Cách để thêm image vào trong 1 component nào đó:
+    - <component>.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().createImage(MainView.class.getResource("ten file"))));
+
+
