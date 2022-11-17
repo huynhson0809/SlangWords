@@ -15,18 +15,30 @@ import view.SlangWordView;
  */
 public class SlangWordTest {
     public static void main(String[] args) {
-//        SlangWordModel counter = new SlangWordModel();
-//
+        SlangWordModel counter = new SlangWordModel();
+
 //        view.SlangWordView ctv = new view.SlangWordView();
 //        controller.SlangWordListener cl = new controller.SlangWordListener(ctv);
 
 //        ArrayList<String> history = new ArrayList<>();
-//        HashMap<String, String> test = new HashMap<>();
+//        HashMap<String, ArrayList<String>> test = new HashMap<>();
 //        SlangWordModel s = new SlangWordModel(test,history);
-//        test = s.readFile();
+//        test = s.readFile("currentSlang.txt");
+//        s.addSlangWord(test,"move","Hello ae",2);
+//
+//        history = s.readFileHistory("history.txt");
+//        for(String i: history){
+//            System.out.println(i);
+//        }
+//        String r = s.toStringDef(res);
+//        System.out.println(r);
 //        s.writeFile(test);
+
+//        s.slangQuiz(test);
+//        s.addSlangWord(test,"move","Hello ae",2);
+//        System.out.println();
 //        System.out.println(s.findDefinition(test,"money"));
-//        s.addSlangWord(test,"#1","Hello ae",1);
+//        s.addSlangWord(test,"#1","Hello ae dddd",2);
 //        s.addSlangWord(test,"#121","Hello ae",2);
 
         SlangWordView v = new SlangWordView();

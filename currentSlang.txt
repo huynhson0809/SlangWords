@@ -688,7 +688,7 @@ THX`Thanks
 ISWYM`I See What You Mean
 RAOK`Random Act Of Kindness
 TIA`Thanks In Advance
-#1`Number one
+#1`sss
 TID`Take It Down
 GAWJUS`Gorgeous
 TIC`Tongue in Cheek
@@ -7059,6 +7059,7 @@ WNWY`What's New With You?
 SOD OFF`Go away| get lost
 KINGS`Drinking game
 CHYEA`Yes| yeah
+move`Hello ae| Hello ae| Hello ae| Hello ae| Hello ae| Hello ae| Hello ae| Hello ae| Hello ae
 WDYWT`What Did You Wear Today?
 HUBBY`Husband
 TEMP`Temporary
@@ -7369,6 +7370,7 @@ DHTML`Dynamic HTML
 RRP`Recommended Retail Price
 10Q`Thank you
 B2B`Back To Back| Business To Business
+sss`sss
 B2C`Business To Consumer
 CHIRP`Insult
 MAMI`Sexy, Baby

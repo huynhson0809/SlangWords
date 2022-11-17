@@ -12,7 +12,7 @@ import java.util.*;
  * @author Admin
  */
 public class SlangWordModel {
-    private HashMap<String, String> slangList;
+    private HashMap<String, ArrayList<String>> slangList;
     private ArrayList<String> history;
 
     public SlangWordModel() {
@@ -20,38 +20,73 @@ public class SlangWordModel {
         this.history = null;
     }
 
-    public SlangWordModel(HashMap<String, String> slangList, ArrayList<String> history) {
+    public SlangWordModel(HashMap<String, ArrayList<String>> slangList, ArrayList<String> history) {
         this.slangList = slangList;
         this.history = history;
     }
 
-    public HashMap<String, String> getSlangList() {
-        return slangList;
+    public HashMap<String, ArrayList<String>> getSlangList() {
+        return this.slangList;
     }
 
     public ArrayList<String> getHistory() {
-        return history;
+        return this.history;
     }
 
-    public void setSlangList(HashMap<String, String> slangList) {
+    public void setSlangList(HashMap<String, ArrayList<String>> slangList) {
         this.slangList = slangList;
     }
 
     public void setHistory(ArrayList<String> history) {
         this.history = history;
     }
-    public HashMap<String, String> readFile(){
-        HashMap<String,String> newSlangList = new HashMap<>();
+
+    public String toStringDef(ArrayList<String> l){
+        String temp="";
+        if(l.size()>1){
+            temp=l.get(0);
+            for(int i=1;i<l.size()-1;i++){
+                temp=temp+"| "+l.get(i);
+            }
+            temp=temp+"| "+l.get(l.size()-1);
+        }
+        else temp=l.get(0);
+        return temp;
+    }
+
+    public String[] splitSlang(String slang){
+        String[] temp = slang.split(" ");
+        String key = temp[0];
+        String value = temp[1];
+        return temp;
+    }
+    public HashMap<String, ArrayList<String>> readFile(String file){
+        HashMap<String,ArrayList<String>> newSlangList = new HashMap<>();
         BufferedReader br = null;
         try {
-            br = new BufferedReader(new FileReader("slang.txt"));
-            String str;
+            br = new BufferedReader(new FileReader(file));
             br.readLine();
             String line;
             while ((line = br.readLine())!= null) {
+                if(!line.contains("`")){
+                    continue;
+                }
                 String[] word = line.split("`");
+                ArrayList<String> def = new ArrayList<>();
+                if(word.length>0){
+                    int index = word[1].indexOf("| ");
+                    if(index==-1){
+                        def.add(word[1]);
+                    }
+                    else {
+                        String[] temp = word[1].split("\\| ");
+                        for(String i: temp){
+                            def.add(i);
+                        }
+                    }
+                }
                 if (word.length == 2)
-                    newSlangList.put(word[0], word[1]); // Only add lines in correct format
+                    newSlangList.put(word[0], def); // Only add lines in correct format
             }
 
         } catch (Exception e) {
@@ -59,19 +94,22 @@ public class SlangWordModel {
         }
 //        System.out.print(newSlangList.size());
 //        for (String i : newSlangList.keySet()) {
-//            System.out.println("key: " + i + " value: " + newSlangList.get(i));
+//            System.out.println("key: " + i + " value: " + this.toStringDef(newSlangList.get(i)));
 //        }
         return newSlangList;
     }
 
 //    write FIle
-    public void writeFile(HashMap<String,String> slangList){
+    public void writeFile(HashMap<String,ArrayList<String>> slangList){
         PrintWriter p = null;
         try {
             p = new PrintWriter("currentSlang.txt","UTF-8");
             p.println("Slag`Meaning");
             for (String i : slangList.keySet()) {
-                p.println(i+"`"+slangList.get(i));
+                p.print(i+"`");
+                p.print(this.toStringDef(slangList.get(i)));
+//                System.out.println(this.toStringDef(slangList.get(i)));
+                p.println();
             }
             p.flush();
             p.close();
@@ -80,72 +118,148 @@ public class SlangWordModel {
             e.printStackTrace();
         }
     }
-    public String randomSlangWord(HashMap<String, String> l){
+
+    public ArrayList<String> readFileHistory(String file){
+        ArrayList<String> newHistory = new ArrayList<>();
+        BufferedReader br = null;
+        try {
+            br = new BufferedReader(new FileReader(file));
+            String str;
+//            br.readLine();
+            String line;
+            while ((line = br.readLine())!= null) {
+                newHistory.add(line);
+                System.out.println(line);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return newHistory;
+    }
+    public void writeFileHistory(ArrayList<String>history){
+        PrintWriter p = null;
+        try {
+            p = new PrintWriter("history.txt","UTF-8");
+            for (String i : history) {
+                p.println(i);
+            }
+            p.flush();
+            p.close();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    public String randomSlangWord(HashMap<String, ArrayList<String>> l){
         String slangRandom;
         long sizeSlangList = l.size();
         Random random = new Random();
         String randomKey = l.keySet().toArray()[
                 random.nextInt(l.keySet().toArray().length)].toString();
-        slangRandom = randomKey+ "`"+l.get(randomKey);
+        slangRandom = randomKey+ "` "+this.toStringDef(l.get(randomKey));
         return slangRandom;
     }
 
-    public String findSlangWord(HashMap<String, String> l, String slang){
-        String s = slang+ "`"+ l.get(slang);
+    public String findSlangWord(HashMap<String, ArrayList<String>> l, String slang){
+        String s="";
+        if(l.containsKey(slang)){
+            s = slang+ "` "+ this.toStringDef(l.get(slang));
+        }
+        ArrayList<String> his = readFileHistory("history.txt");
+        if(history!=null){
+            his = getHistory();
+            his.add(slang);
+            setHistory(his);
+        }
+        else {
+            his.add(slang);
+            setHistory(his);
+        }
+        writeFileHistory(history);
         return s;
     }
-    public ArrayList<String> findDefinition(HashMap<String, String> l, String slang){
+    public ArrayList<String> findDefinition(HashMap<String, ArrayList<String>> l, String slang){
         ArrayList<String>arrSlang = new ArrayList<>();
         for (String i : l.keySet()) {
-            if(l.get(i).contains(slang)){
-                arrSlang.add(i+"`"+l.get(i));
+            if(this.toStringDef(l.get(i)).contains(slang)){
+                arrSlang.add(i+"` "+this.toStringDef(l.get(i)));
             }
         }
         return arrSlang;
     }
 
-    public void addSlangWord(HashMap<String, String> l, String slang, String definition, int check){
+    public void addSlangWord(HashMap<String, ArrayList<String>> l, String slang, String definition, int check){
         //if check == 1: overwrite
         //else if check == 2: create new slang word
         if(l.containsKey(slang)){
             if(check ==1){
                 System.out.println("check =1 ");
-                l.put(slang,definition);
+                ArrayList<String> defList = new ArrayList<>();
+                defList.add(definition);
+                l.put(slang,defList);
             }
             else if(check==2){
-                System.out.println("check =2 ");
-                l.put(slang, l.get(slang) + "| " + definition);
+                System.out.println("check = 2 ");
+                ArrayList<String> defList = l.get(slang);
+                defList.add(definition);
+                l.put(slang, defList);
             }
         }
         else {
-            l.put(slang,definition);
+            ArrayList<String> defList = new ArrayList<>();
+            defList.add(definition);
+            l.put(slang,defList);
+            System.out.println("OK");
         }
         writeFile(l);
     }
 
-    public int editSlang(HashMap<String, String> l, String key, String valueUpdate){
+    public void editSlang(HashMap<String, ArrayList<String>> l, String key, String valueUpdate){
         if(l.containsKey(key)){
-            l.put(key,valueUpdate);
-            return 1; //success
+            ArrayList<String> defList = new ArrayList<>();
+            defList.add(valueUpdate);
+            l.put(key,defList);
+//            return 1; //success
         }
-        else return 0;//fail
+//        else return 0;//fail
+        writeFile(l);
     }
-    public void deleteSlang(HashMap<String, String> l, String key){
+    public void deleteSlang(HashMap<String, ArrayList<String>> l, String key){
         if(l.containsKey(key)){
             l.remove(key);
         }
+        writeFile(l);
     }
+    public void resetSlang(HashMap<String, ArrayList<String>>l){
+        l = this.readFile("slang.txt");
+        this.setSlangList(l);
+    }
+
     //9. do vui slang word
-    public void slangQuiz(HashMap<String, String> l){
+    public void slangQuiz(HashMap<String, ArrayList<String>> l){
+        String[] temp = null;
+        String key = null;
+        String value = null;
+
         String randomSlang = randomSlangWord(l);
-        System.out.println(randomSlang);
+        temp = splitSlang(randomSlang);
+        key = temp[0];
+
+        System.out.println(key);
 //        String result = l.get(randomSlang);
         String a="",b="",c="";
-        if(!l.containsKey(randomSlang)){
-            a = randomSlangWord(l);
-            b = randomSlangWord(l);
-            c = randomSlangWord(l);
-        }
+        l.remove(key);
+
+        a = randomSlangWord(l);
+        temp = splitSlang(randomSlang);
+        key = temp[0];
+        l.remove(key);
+        b = randomSlangWord(l);
+        temp = splitSlang(randomSlang);
+        key = temp[0];
+        l.remove(key);
+        c = randomSlangWord(l);
         System.out.println(a);
         System.out.println(b);
         System.out.println(c);
