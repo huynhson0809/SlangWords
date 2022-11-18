@@ -1,5 +1,5 @@
 Slag`Meaning
-BBC`British Broadcasting Corporation
+BBC`Hello ae
 BBB`Bugging Beyond Belief
 BBE`Babe
 GLOTR`Good Luck On The Rebuild
@@ -688,8 +688,6 @@ THX`Thanks
 ISWYM`I See What You Mean
 RAOK`Random Act Of Kindness
 TIA`Thanks In Advance
-#1`kakak| kakakccasc
-TID`Take It Down
 GAWJUS`Gorgeous
 TIC`Tongue in Cheek
 TIF`That Is Funny
@@ -4125,6 +4123,7 @@ ZUP`What's up?
 OOTD`Offer Of The Day| Outfit Of The Day
 ITA`I Totally Agree
 WAEFRD`When All Else Fails, Read Directions
+Slag`Meaning
 ZUT`Damn it
 BION`Believe It Or Not
 ITC`In That Case| In This Channel
@@ -7059,7 +7058,6 @@ WNWY`What's New With You?
 SOD OFF`Go away| get lost
 KINGS`Drinking game
 CHYEA`Yes| yeah
-move`Hello ae| Hello ae| Hello ae| Hello ae| Hello ae| Hello ae| Hello ae| Hello ae| Hello ae
 WDYWT`What Did You Wear Today?
 HUBBY`Husband
 TEMP`Temporary

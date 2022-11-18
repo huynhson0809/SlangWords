@@ -54,12 +54,20 @@ public class SlangWordModel {
         return temp;
     }
 
-    public String[] splitSlang(String slang){
-        String[] temp = slang.split(" ");
+//    public String[] splitSlang(String slang){
+//        String[] temp = slang.split(" ");
+//        String key = temp[0];
+//        String value = temp[1];
+//        return temp;
+//    }
+
+    public String[] splitSlangV2(String slang){
+        String[] temp = slang.split("` ");
         String key = temp[0];
         String value = temp[1];
         return temp;
     }
+
     public HashMap<String, ArrayList<String>> readFile(String file){
         HashMap<String,ArrayList<String>> newSlangList = new HashMap<>();
         BufferedReader br = null;
@@ -129,7 +137,7 @@ public class SlangWordModel {
             String line;
             while ((line = br.readLine())!= null) {
                 newHistory.add(line);
-                System.out.println(line);
+//                System.out.println(line);
             }
 
         } catch (Exception e) {
@@ -177,6 +185,14 @@ public class SlangWordModel {
             setHistory(his);
         }
         writeFileHistory(history);
+        return s;
+    }
+
+    public String findSlangWordEdit(HashMap<String, ArrayList<String>> l, String slang){
+        String s="";
+        if(l.containsKey(slang)){
+            s = slang+ "` "+ this.toStringDef(l.get(slang));
+        }
         return s;
     }
     public ArrayList<String> findDefinition(HashMap<String, ArrayList<String>> l, String slang){
@@ -231,39 +247,98 @@ public class SlangWordModel {
         }
         writeFile(l);
     }
-    public void resetSlang(HashMap<String, ArrayList<String>>l){
-        l = this.readFile("slang.txt");
+    public void resetSlang(){
+        HashMap<String, ArrayList<String>>l = this.readFile("slang.txt");
         this.setSlangList(l);
+        writeFile(l);
+    }
+    public void clearHistory(){
+        ArrayList<String> newHistory = new ArrayList<>();
+        writeFileHistory(newHistory);
     }
 
     //9. do vui slang word
-    public void slangQuiz(HashMap<String, ArrayList<String>> l){
+    public void slangQuiz(HashMap<String, ArrayList<String>> l, ArrayList<String> answersRes, ArrayList<String> result, int check){
+        ArrayList<String> newArr = new ArrayList<>();
+        ArrayList<String> answers = new ArrayList<>();
+        answers.add("0");
+        answers.add("0");
+        answers.add("0");
+        answers.add("0");
         String[] temp = null;
-        String key = null;
-        String value = null;
+        String key=null;
 
         String randomSlang = randomSlangWord(l);
-        temp = splitSlang(randomSlang);
-        key = temp[0];
+        temp = splitSlangV2(randomSlang);
+        if(check==1){
+            newArr.add(temp[0]);
+            newArr.add(temp[1]);
+        }
+        else if(check==2){
+            newArr.add(temp[1]);
+            newArr.add(temp[0]);
+        }
 
-        System.out.println(key);
-//        String result = l.get(randomSlang);
-        String a="",b="",c="";
-        l.remove(key);
 
-        a = randomSlangWord(l);
-        temp = splitSlang(randomSlang);
+        ArrayList<String> abc = new ArrayList<>();
+        abc.add("0");
+        abc.add("0");
+        abc.add("0");
+        l.remove(temp[0]);
+
+        abc.set(0,randomSlangWord(l));
+        temp = splitSlangV2(abc.get(0));
         key = temp[0];
+        if(check==1){
+            abc.set(0,temp[1]);
+        }
+        else {
+            abc.set(0,temp[0]);
+        }
         l.remove(key);
-        b = randomSlangWord(l);
-        temp = splitSlang(randomSlang);
+        temp=null;
+
+        abc.set(1,randomSlangWord(l));
+        temp = splitSlangV2(abc.get(1));
         key = temp[0];
+        if(check==1){
+            abc.set(1,temp[1]);
+        }
+        else {
+            abc.set(1,temp[0]);
+        }
         l.remove(key);
-        c = randomSlangWord(l);
-        System.out.println(a);
-        System.out.println(b);
-        System.out.println(c);
+        temp=null;
+
+        abc.set(2,randomSlangWord(l));
+        temp = splitSlangV2(abc.get(2));
+        if(check==1){
+            abc.set(2,temp[1]);
+        }
+        else {
+            abc.set(2,temp[0]);
+        }
+
+        Random random = new Random();
+        int res = random.nextInt(0, 4);
+
+        answers.set(res,newArr.get(1));
+        answersRes.add(answers.get(res));
+
+        int i=0,i2=0;
+        while(i<4 && answersRes.size() <4){
+            if(i==res){
+                i=i+1;
+            }
+            else {
+                answersRes.add(abc.get(i2));
+                i++;i2++;
+            }
+
+        }
+        for(String str: newArr){
+            result.add(str);
+        }
     }
-
 
 }

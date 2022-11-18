@@ -13,6 +13,8 @@ import view.SlangWordView;
  *
  * @author Admin
  */
+
+
 public class SlangWordTest {
     public static void main(String[] args) {
         SlangWordModel counter = new SlangWordModel();
