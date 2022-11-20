@@ -1,6 +1,4 @@
-package view;
-import controller.SlangWordListener;
-import model.SlangWordModel;
+
 
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -541,7 +539,7 @@ public class SlangWordView extends JFrame{
         Font font2 = new Font("Arial", Font.BOLD, 30);
         Font font = new Font("Arial", Font.BOLD, 30);
         right =new JPanel();
-        JLabel randomTitle = new JLabel("Random Slang (`Slang` Definition)");
+        JLabel randomTitle = new JLabel("Random Slang (Slang` Definition)");
         randomTitle.setForeground(new Color(33, 151, 221));
         randomTitle.setFont(font2);
         slangRandom = new JLabel("", JLabel.CENTER);
@@ -736,25 +734,30 @@ public class SlangWordView extends JFrame{
         String def = defText.getText();
         int check =-1;
         if(slangList.containsKey(slang)){
-            String[] options = {"Overwrite it", "Only add meaning", "Cancel"};
-            int choice = JOptionPane.showOptionDialog(this, "Slang is already existed!",
-                    "Slang existed", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                    options, options[2]);
-            if(choice==0){
-                this.slangModel.addSlangWord(slangList,slang,def,1);
-                JOptionPane.showMessageDialog(this, "Done!");
-                slangText.setText("");
-                defText.setText("");
+            if(defText.getText().isEmpty()){
+                JOptionPane.showMessageDialog(this, "Please enter slang or definition");
             }
-            else if(choice==1){
-                this.slangModel.addSlangWord(slangList,slang,def,2);
-                JOptionPane.showMessageDialog(this, "Done!");
-                slangText.setText("");
-                defText.setText("");
+            else {
+                String[] options = {"Overwrite it", "Only add meaning", "Cancel"};
+                int choice = JOptionPane.showOptionDialog(this, "Slang is already existed!",
+                        "Slang existed", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+                        options, options[2]);
+                if(choice==0){
+                    this.slangModel.addSlangWord(slangList,slang,def,1);
+                    JOptionPane.showMessageDialog(this, "Done!");
+                    slangText.setText("");
+                    defText.setText("");
+                }
+                else if(choice==1){
+                    this.slangModel.addSlangWord(slangList,slang,def,2);
+                    JOptionPane.showMessageDialog(this, "Done!");
+                    slangText.setText("");
+                    defText.setText("");
+                }
             }
         }
         else {
-            if(slang.isEmpty()||def.isEmpty()){
+            if(slangText.getText().isEmpty()||defText.getText().isEmpty()){
                 JOptionPane.showMessageDialog(this, "Please enter slang or definition");
             }
             else {
@@ -852,34 +855,6 @@ public class SlangWordView extends JFrame{
             }
         }
     }
-
-//    public void handleSlangQuizDef(int i, int check){
-//        HashMap<String, ArrayList<String>> slangList = this.slangModel.readFile("currentSlang.txt");
-//        ArrayList<String> answers = new ArrayList<>();
-//        ArrayList<String> result = new ArrayList<>();
-//
-//        this.slangModel.slangQuiz(slangList, answers,result,check);
-//
-//        slangQues.setText(result.get(0));
-//        anwerBtn[0].setText(answers.get(0));
-//        anwerBtn[1].setText(answers.get(1));
-//        anwerBtn[2].setText(answers.get(2));
-//        anwerBtn[3].setText(answers.get(3));
-//        if(i!=-1){
-//            if(anwerBtn[i].getText()==result.get(1)){
-//                JOptionPane.showMessageDialog(this,
-//                        "Correct!",
-//                        "Correct answer",
-//                        JOptionPane.INFORMATION_MESSAGE);
-//            }
-//            else {
-//                JOptionPane.showMessageDialog(this,
-//                        "Wrong!",
-//                        "Wrong answer",
-//                        JOptionPane.ERROR_MESSAGE);
-//            }
-//        }
-//    }
 
 
 }
