@@ -1,4 +1,3 @@
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.PrintWriter;
@@ -6,6 +5,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import java.util.*;
+
+/**
+ *
+ * @author Admin
+ */
 public class SlangWordModel {
     private HashMap<String, ArrayList<String>> slangList;
     private ArrayList<String> history;
@@ -102,7 +106,7 @@ public class SlangWordModel {
         return newSlangList;
     }
 
-//    write FIle
+    //    write FIle
     public void writeFile(HashMap<String,ArrayList<String>> slangList){
         PrintWriter p = null;
         try {
@@ -252,4 +256,89 @@ public class SlangWordModel {
         writeFileHistory(newHistory);
     }
 
-    
+    //9. do vui slang word
+    public void slangQuiz(HashMap<String, ArrayList<String>> l, ArrayList<String> answersRes, ArrayList<String> result, int check){
+        ArrayList<String> newArr = new ArrayList<>();
+        ArrayList<String> answers = new ArrayList<>();
+        answers.add("0");
+        answers.add("0");
+        answers.add("0");
+        answers.add("0");
+        String[] temp = null;
+        String key=null;
+
+        String randomSlang = randomSlangWord(l);
+        temp = splitSlangV2(randomSlang);
+        if(check==1){
+            newArr.add(temp[0]);
+            newArr.add(temp[1]);
+        }
+        else if(check==2){
+            newArr.add(temp[1]);
+            newArr.add(temp[0]);
+        }
+
+
+        ArrayList<String> abc = new ArrayList<>();
+        abc.add("0");
+        abc.add("0");
+        abc.add("0");
+        l.remove(temp[0]);
+
+        abc.set(0,randomSlangWord(l));
+        temp = splitSlangV2(abc.get(0));
+        key = temp[0];
+        if(check==1){
+            abc.set(0,temp[1]);
+        }
+        else {
+            abc.set(0,temp[0]);
+        }
+        l.remove(key);
+        temp=null;
+
+        abc.set(1,randomSlangWord(l));
+        temp = splitSlangV2(abc.get(1));
+        key = temp[0];
+        if(check==1){
+            abc.set(1,temp[1]);
+        }
+        else {
+            abc.set(1,temp[0]);
+        }
+        l.remove(key);
+        temp=null;
+
+        abc.set(2,randomSlangWord(l));
+        temp = splitSlangV2(abc.get(2));
+        if(check==1){
+            abc.set(2,temp[1]);
+        }
+        else {
+            abc.set(2,temp[0]);
+        }
+
+        Random random = new Random();
+        int res = random.nextInt(0, 4);
+
+        answers.set(res,newArr.get(1));
+        answersRes.add(answers.get(res));
+
+        int i=0,i2=0;
+        while(i<4 && answersRes.size() <4){
+            if(i==res){
+                i=i+1;
+            }
+            else {
+                answersRes.add(abc.get(i2));
+                i++;i2++;
+            }
+
+        }
+        for(String str: newArr){
+            result.add(str);
+        }
+    }
+
+}
+

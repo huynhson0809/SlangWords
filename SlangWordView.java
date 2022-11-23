@@ -1,5 +1,3 @@
-
-
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.image.ImageProducer;
@@ -65,7 +63,7 @@ public class SlangWordView extends JFrame{
         this.init("Slang Words",1 );
     }
 
-//    public void setPanel(JPanel panel){
+    //    public void setPanel(JPanel panel){
 //        this.panel = panel;
 //    }
 //
@@ -769,18 +767,35 @@ public class SlangWordView extends JFrame{
         }
     }
 
+    public void handleEditSlang(){
+        String slangSearch = editText.getText();
+        HashMap<String, ArrayList<String>> slangList = this.slangModel.readFile("currentSlang.txt");
+        String res = this.slangModel.findSlangWordEdit(slangList,slangSearch);
+//        System.out.println(res);
+        if(res==""){
+            res = "No Slang";
+            JOptionPane.showMessageDialog(this, res);
+        }
+        else {
+            String[] result = this.slangModel.splitSlangV2(res);
+            slangTextEdit.setText(result[0]);
+            defTextEdit.setText(result[1]);
+        }
+    }
 
     public void handleSaveSlangEdit(){
         String slangSearch = slangTextEdit.getText();
         System.out.println(slangSearch);
         String defUpdate = defTextEdit.getText();
         HashMap<String, ArrayList<String>> slangList = this.slangModel.readFile("currentSlang.txt");
-        this.slangModel.editSlang(slangList,slangSearch,defUpdate);
+        if(!slangSearch.isEmpty() && !defUpdate.isEmpty()){
+            this.slangModel.editSlang(slangList,slangSearch,defUpdate);
             JOptionPane.showMessageDialog(this, "Edit Successful");
             slangTextEdit.setText("");
             defTextEdit.setText("");
             editText.setText("");
             editText.requestFocusInWindow();
+        }
     }
     public void handleDeleteSlang(){
         String slangSearch = slangDeleteText.getText();
@@ -823,7 +838,8 @@ public class SlangWordView extends JFrame{
         anwerBtn[1].setText(answers.get(1));
         anwerBtn[2].setText(answers.get(2));
         anwerBtn[3].setText(answers.get(3));
-        if(anwerBtn[i].getText()==result.get(1)){
+        if(i!=-1){
+            if(anwerBtn[i].getText()==result.get(1)){
                 JOptionPane.showMessageDialog(this,
                         "Correct!",
                         "Correct answer",
@@ -835,7 +851,9 @@ public class SlangWordView extends JFrame{
                         "Wrong answer",
                         JOptionPane.ERROR_MESSAGE);
             }
+        }
     }
 
 
 }
+
