@@ -10,7 +10,7 @@ public class SlangWordListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String src = e.getActionCommand();
-        System.out.println("Ban da nhan nut: "+ src);
+//        System.out.println("Ban da nhan nut: "+ src);
         if(src.equals("Find By Slang")){
             swv.handleChangeSearchView();
         } else if (src.equals("Find By Definition")) {
