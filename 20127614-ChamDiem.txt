@@ -1,0 +1,18 @@
+Tên: Huỳnh Ngọc Sơn
+MSSV: 20127614
+Lớp: Lập trình ứng dụng Java - 20KTPM2
+Chấm điểm cho từng chức năng:
+g
+- Chức năng tìm kiếm theo slang word: 10 điểm
+- Chức năng tìm kiếm theo definition, hiển thị ra tất cả các slang words mà trong defintion có chứa keyword gõ vào: 10 điểm
+- Chức năng hiển thị history, danh sách các slang word đã tìm kiếm: 10 điểm
+- Chức năng add 1 slang words mới. Nếu slang words trùng thì thông báo cho người dùng, confirm có overwrite hay duplicate ra 1 slang word mới: 10 điểm
+- Chức năng edit 1 slang word: 10 điểm
+- Chức năng delete 1 slang word. Confirm trước khi xoá: 10 điểm
+- Chức năng reset danh sách slang words gốc: 10 điểm
+- Chức năng random 1 slang word (On this day slang word): 10 điểm
+- Chức năng đố vui, chương trình hiển thị 1 random slang word, với 4 đáp án cho người dùng chọn: 10 điểm
+- Chức năng đố vui, chương trình hiển thị 1 definition, với 4 slang words đáp án cho
+người dùng chọn: 10 điểm
+==> Tổng điểm tự đánh giá: 100 điểm
+Link Youtube: https://youtu.be/2DD6KiGwwB8 (không tham khảo từ các nguồn trên internet)
